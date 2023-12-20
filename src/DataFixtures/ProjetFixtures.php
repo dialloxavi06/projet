@@ -20,6 +20,9 @@ class ProjetFixtures extends Fixture
             $projet->setStatus(StatutTâche::EnCours); 
             $projet->setName($faker->word);
             $projet->setDescription($faker->sentence);
+
+             // Ajout d'une référence pour pouvoir l'utiliser dans d'autres fixtures
+             $this->addReference('projet_' . $i, $projet);
             $manager->persist($projet);
         }
 

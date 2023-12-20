@@ -51,16 +51,78 @@ class ProjetRepository extends ServiceEntityRepository
 
 public function getStatusCounts()
 {
-    // Écrire votre logique pour récupérer le nombre d'entités par 'status'
+  
+    $queryBuilder = $this->createQueryBuilder('e')
+        ->select('e.status, COUNT(e.id) as entityCount')
+        ->groupBy('e.status');
+
+    $result = $queryBuilder->getQuery()->getResult();
+
+    $statusCounts = [];
+
+    foreach ($result as $row) {
+        if (
+            isset($row['status']) &&
+            isset($row['entityCount']) &&
+            $row['status'] instanceof \App\Enum\StatutTâche // Vérifiez le type d'énumération
+        ) {
+            // Exemple hypothétique : suppose que la valeur est accessible via une propriété publique
+            $status = $row['status']->value; // Utilisez la propriété publique (changez "value" selon votre énumération)
+            $count = $row['entityCount'];
+
+            $statusCounts[$status] = $count;
+        }
+    }
+
+    return $statusCounts;
+
 }
 
 public function findLatestEntities($limit)
 {
     // Écrire votre logique pour récupérer les 5 dernières entités
-}
 
+    return $this->createQueryBuilder('e')
+    ->orderBy('e.createdAt', 'DESC') // Suppose que votre entité a une propriété createdAt
+    ->setMaxResults($limit)
+    ->getQuery()
+    ->getResult();
+}
 public function getStatusRates()
 {
-    // Écrire votre logique pour calculer le taux de chaque 'status'
+    // Récupérer le nombre total d'entités principales
+    $totalEntities = $this->createQueryBuilder('e')
+        ->select('COUNT(e.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+    // Récupérer le nombre d'entités principales par 'status'
+    $statusCounts = $this->createQueryBuilder('e')
+        ->select('e.status, COUNT(e.id) as entityCount')
+        ->groupBy('e.status')
+        ->getQuery()
+        ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
+   
+
+    // Calculer le taux de chaque 'status'
+    $statusRates = [];
+    
+    foreach ($statusCounts as $row) {
+        if (
+            isset($row['status']) &&
+            isset($row['entityCount']) &&
+            $row['status'] instanceof \App\Enum\StatutTâche
+        ) {
+            $status = $row['status']->value; // Remplacez "value" par le nom de la propriété réelle
+            $count = $row['entityCount'];
+
+            // Éviter la division par zéro
+            $statusRates[$status] = $totalEntities > 0 ? ($count / $totalEntities) * 100 : 0;
+        }
+    }
+
+    return $statusRates;
 }
+
 }

@@ -11,7 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 
 class DashboardController extends AbstractController
-{
+{ 
     #[Route('/dashboard', name: 'dashboard')]
     public function index(ManagerRegistry $doctrine): Response
     {

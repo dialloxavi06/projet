@@ -11,7 +11,7 @@ use Faker\Factory;
 use App\Enum\StatutTâche;
 
 
-class TacheFixture extends Fixture
+class TacheFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -22,6 +22,16 @@ class TacheFixture extends Fixture
             $tache->setTitre($faker->sentence);
             $tache->setDescription($faker->paragraph);
             $tache->setStatus(StatutTâche::EnCours);
+
+             // Génération de dates de manière à ce que la date de début soit antérieure à la date de fin
+            $dateDebut = $faker->dateTimeBetween('now', '+1 month ');
+            $dateFin = $faker->dateTimeBetween($dateDebut, '+1 year');
+
+            
+
+            $tache->setDateDebut(\DateTimeImmutable::createFromMutable($dateDebut));
+            $tache->setDateFin(\DateTimeImmutable::createFromMutable($dateFin));
+
 
             $projet = new Projet();
             $projet->setName($faker->word);
