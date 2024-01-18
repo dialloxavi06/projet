@@ -1,42 +1,160 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard
+{% endblock %}
 
 {% block body %}
 
-<div class="example-wrapper"> 
-    {% if statusCounts is not empty %}
-        <ul>
-            {% for status, count in statusCounts %}
-                <li>{{ status }}: {{ count }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No status counts available.</p>
-    {% endif %}
-</div>
-<div class="example-wrapper"> 
-    {% if latestEntities is not empty %}
-        <ul>
-            {# Assuming latestEntities is an array, loop through the first 5 elements #}
-            {% for entity in latestEntities|slice(0, 5) %}
-                <li>{{ entity.name }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No latest entities available.</p>
-    {% endif %}
-</div>
+	<div class="container">
+		<div class="row row-cols-2">
+			{% if statusCounts is not empty %}
+				<ul class="list-unstyled">
+					{% for status, count in statusCounts %}
+						<li>{{ status }}:
+							{{ count }}</li>
+					{% endfor %}
+				</ul>
 
-<div class="example-wrapper"> 
-    {% if statusRates is not empty %}
-        <ul>
-            {# Assuming statusRates is an array, loop through it #}
-            {% for status, rate in statusRates %}
-                <li>{{ status }}: {{ rate }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
+				{# Ajouter un graphique pour statusCounts #}
+				<div style="width: 400px; height: 400px;">
+
+					<canvas id="statusCountsChart" width="400" height="400"></canvas>
+				</div>
+				<script>
+					document.addEventListener('DOMContentLoaded', function () {
+var statusCountsChart = new Chart(document.getElementById('statusCountsChart'), {
+type: 'bar',
+data: {
+labels: [{% for status, count in statusCounts %}"{{ status }}",{% endfor %}],
+datasets: [
+{
+label: 'Status Counts',
+data: [{% for status, count in statusCounts %}{{ count }},{% endfor %}],
+backgroundColor: 'rgba(75, 192, 192, 0.2)',
+borderColor: 'rgba(75, 192, 192, 1)',
+borderWidth: 1
+}
+]
+},
+options: {
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+});
+});
+				</script>
+			{% else %}
+				<p>No status counts available.</p>
+			{% endif %}
+
+			{% if latestEntities is not empty %}
+				<ul
+					class="list-unstyled">
+					{# Assuming latestEntities is an array, loop through the first 5 elements #}
+					{% for entity in latestEntities|slice(0, 5) %}
+						<li>{{ entity.name }}</li>
+					{% endfor %}
+				</ul>
+
+				{# Ajouter un graphique pour les cinq dernières entités #}
+				<div style="width: 400px; height: 400px;">
+
+					<canvas id="latestEntitiesChart" width="400" height="400"></canvas>
+				</div>
+				<script>
+					document.addEventListener('DOMContentLoaded', function () {
+var latestEntitiesLabels = [{% for entity in latestEntities|slice(0, 5) %}"{{ entity.name }}",{% endfor %}];
+var latestEntitiesData = [{% for entity in latestEntities|slice(0, 5) %}1,{% endfor %}]; // Utilisez 1 pour chaque entité si vous n'avez pas de données numériques
+
+var latestEntitiesChart = new Chart(document.getElementById('latestEntitiesChart'), {
+type: 'bar',
+data: {
+labels: latestEntitiesLabels,
+datasets: [
+{
+label: 'Latest Entities',
+data: latestEntitiesData,
+backgroundColor: 'rgba(255, 99, 132, 0.2)',
+borderColor: 'rgba(255, 99, 132, 1)',
+borderWidth: 1
+}
+]
+},
+options: {
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+});
+});
+				</script>
+			{% else %}
+				<p>No latest entities available.</p>
+			{% endif %}
+
+
+			{% if statusRates is not empty %}
+				<ul
+					class="list-unstyled">
+					{# Assuming statusRates is an array, loop through it #}
+					{% for status, rate in statusRates %}
+						<li>{{ status }}:
+							{{ rate }}</li>
+					{% endfor %}
+				</ul>
+
+				{# Ajouter un graphique pour les taux de statut #}
+				<div style="width: 400px; height: 400px;">
+					<canvas id="statusRatesChart" width="400" height="400"></canvas>
+				</div>
+				<script>
+					document.addEventListener('DOMContentLoaded', function () {
+var statusRatesLabels = [{% for status, rate in statusRates %}"{{ status }}",{% endfor %}];
+var statusRatesData = [{% for status, rate in statusRates %}{{ rate }},{% endfor %}];
+
+var statusRatesChart = new Chart(document.getElementById('statusRatesChart'), {
+type: 'pie',
+data: {
+labels: statusRatesLabels,
+datasets: [
+{
+data: statusRatesData,
+backgroundColor: [
+'rgba(255, 99, 132, 0.2)',
+'rgba(54, 162, 235, 0.2)',
+'rgba(255, 206, 86, 0.2)',
+'rgba(75, 192, 192, 0.2)',
+'rgba(153, 102, 255, 0.2)',
+],
+borderColor: [
+'rgba(255,99,132,1)',
+'rgba(54, 162, 235, 1)',
+'rgba(255, 206, 86, 1)',
+'rgba(75, 192, 192, 1)',
+'rgba(153, 102, 255, 1)',
+],
+borderWidth: 1
+}
+]
+},
+options: {
+responsive: true,
+maintainAspectRatio: true
+}
+});
+});
+				</script>
+			{% endif %}
+
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 {% endblock %}
+
