@@ -1,0 +1,35 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+	<div class="container mt-5">
+
+
+		<div class="row g-4 mx-auto">
+
+			<h1 class="text-center">Formulaire d'ajout d'un Projet</h1>
+
+			{{ form_start(form, {'attr': {'class': 'col-md-6 mx-auto'}}) }}
+
+    <div class="col-md-6">
+        {{ form_row(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom du projet'}}) }}
+    </div>
+
+    <div class="col-md-6">
+        {{ form_row(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+    </div>
+
+    <div class="col-md-6">
+        {{ form_label(form.status, 'Statut du projet', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.status, {'attr': {'class': 'form-select'}}) }}
+        {{ form_errors(form.status) }}
+    </div>
+
+    {{ form_rest(form) }}
+
+{{ form_end(form) }}
+
+
+		</div>
+	</div>
+
+{% endblock %}

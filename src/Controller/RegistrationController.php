@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\PersonneType;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginAuthenticator;
@@ -17,18 +18,28 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+
+
 
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
+    private User $isverified;
 
     public function __construct(EmailVerifier $emailVerifier)
     {
         $this->emailVerifier = $emailVerifier;
+        
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
+    UserAuthenticatorInterface $userAuthenticator, 
+    LoginAuthenticator $authenticator, 
+    EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -87,4 +98,30 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('dashboard');
     }
+    #[Route('/delete/{id}', name: 'personne.delete')]
+    public function deletePersonne(int $id, ManagerRegistry $doctrine): RedirectResponse {
+        // Récupérer la personne par l'id
+        $user = $doctrine->getRepository(User::class)->find($id);
+    
+        // Vérifier si la personne existe
+        if ($user) {
+            
+    
+            // Ajouter la fonction de suppression dans la transaction
+            $manager = $doctrine->getManager();
+            $manager->remove($user);
+    
+            // Exécuter la transaction
+            $manager->flush();
+    
+            $this->addFlash('success', "La personne a été supprimée avec succès");
+        } else {
+            // Si la personne n'existe pas, retourner un flashMessage d'erreur
+            $this->addFlash('error', "Personne inexistante");
+        }
+    
+        return $this->redirectToRoute('personne.list');
+    }
+    
+  
 }

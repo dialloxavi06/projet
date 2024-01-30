@@ -48,4 +48,10 @@ class Echeance
 
         return $this;
     }
+
+    public function __toString(): string
+{
+    return $this->date->format('Y-m-d'); // Vous pouvez ajuster le format selon vos besoins
+}
+
 }

@@ -15,9 +15,7 @@
 		<link href="{{ asset('node_modules/@fortawesome/fontawesome-free/css/all.css') }}" rel="stylesheet"/>
 		<link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet"/> {% block stylesheets %}{% endblock %}
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-		{# {% block style %}
-						Gestion Projet 
-				{% endblock %} #}
+
 	</head>
 	<body>
 		<nav
@@ -50,64 +48,62 @@
 						<li>
 							<a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
 						</li>
+						<li>
+							<a class="dropdown-item" href="{{path('app_register')}}">Register</a>
+						</li>
+
 					</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="layoutSidenav">
-		    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<div id="layoutSidenav_nav">
+					<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+						<div class="sb-sidenav-menu">
+							<div class="nav">
+								<div class="sb-sidenav-menu-heading">Core</div>
+								<a class="nav-link" href="{{ path('dashboard')}}">
+									<div class="sb-nav-link-icon">
+										<i class="fas fa-tachometer-alt"></i>
+									</div>
+									Tableau de board
+								</a>
+								<div class="sb-sidenav-menu-heading">Interface</div>
+								<a class="nav-link collapsed" href="{{ path('personne.list')}}">
+									<div class="sb-nav-link-icon">
+										<i class="fas fa-columns"></i>
+									</div>
+									Users
+								</a>
 
-			<div id="layoutSidenav_nav">
-				<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-					<div class="sb-sidenav-menu">
-						<div class="nav">
-							<div class="sb-sidenav-menu-heading">Core</div>
-							<a class="nav-link" href="index.html">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div>
-								Tableau de board
-							</a>
-							<div class="sb-sidenav-menu-heading">Interface</div>
-							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-columns"></i>
-								</div>
-								Users
-							</a>
-							
-							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-book-open"></i>
-								</div>
-								Collaborateurs			
-							</a>
+								<a class="nav-link collapsed" href="{{ path('app_collaborateur')}}">
+									<div class="sb-nav-link-icon">
+										<i class="fas fa-book-open"></i>
+									</div>
+									Collaborateurs
+								</a>
+								<a class="nav-link collapsed" href="{{ path('app_projet')}}">
+									<div class="sb-nav-link-icon">
+										<i class="fas fa-book-open"></i>
+									</div>
+									Projets
+								</a>
 
-							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-book-open"></i>
-								</div>
-								Tâches			
-							</a>
-							
-
+							</div>
 						</div>
-					</div>
-					<div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    {% if app.user %}
-                        {{ app.user.email }}
-                    {% else %}
-                        Anonymous
-                    {% endif %}
-                </div>
-            </nav>
-        </div>
-    {% endif %}
+						<div class="sb-sidenav-footer">
+							<div class="small">Logged in as:</div>
+							{% if app.user %}
+								{{ app.user.nom }}
+							{% else %}
+								Anonymous
+							{% endif %}
+						</div>
+					</nav>
+				</div>
 			<div id="layoutSidenav_content">
 				<main>
 					<div class="container-fluid px-4">
-						<h1 class="mt-4">Page d'acceuil</h1>
 
 						<div class="card mb-4">
 

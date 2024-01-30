@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Projets{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2>Liste des Collaborateurs</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Adresse mail</th>
+                {# <th scope="col">Statut</th> #}
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for collaborateur in pagination %}
+                <tr>
+                    <td>{{ collaborateur.nom }}</td>
+                    <td>{{ collaborateur.prenom }}</td>
+                    <td>{{ collaborateur.adressMail}}</td> 
+                    <td>
+                       
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('collaborateur.delete', {id: collaborateur.id}) }}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-user-times"></i> 
+                            </a>
+                            <a href="{{ path('collaborateur.add', {id: collaborateur.id}) }}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-user-edit"></i> 
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+     {% if is_granted('ROLE_ADMIN') %}
+<div class = "mb-4">
+			<a href="{{ path('collaborateur.add') }}" class="btn btn-secondary">Ajout Collaborateur</a>
+			</div>    {% endif %}
+</div>
+
+ <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

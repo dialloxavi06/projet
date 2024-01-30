@@ -16,6 +16,7 @@ class Projet
     #[ORM\Column]
     private ?int $id = null;
 
+   
     #[ORM\Column(length: 255)]
     private ?StatutTâche $status = null ;
 
@@ -65,9 +66,10 @@ class Projet
     public function setStatus(?StatutTâche $status): static
     {
         $this->status = $status;
-
+    
         return $this;
     }
+    
 
     /**
      * @return Collection<int, Tache>
@@ -76,7 +78,7 @@ class Projet
     {
         return $this->taches;
     }
-
+ 
     public function addTach(Tache $tach): static
     {
         if (!$this->taches->contains($tach)) {
@@ -194,4 +196,6 @@ class Projet
 
         return $this;
     }
+
+  
 }

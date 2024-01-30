@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+		<title>
+			{% block title %}
+				Gestion Projet
+			{% endblock %}
+		</title>
+		<link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet"/>
+		<link href="{{ asset('node_modules/@fortawesome/fontawesome-free/css/all.css') }}" rel="stylesheet"/>
+		<link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet"/> {% block stylesheets %}{% endblock %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+
+	</head>
+    <boody>
+	{% block body %}
+Mes formulaire
+    {% endblock %}
+
+ <footer class="py-4 bg-light fixed-bottom w-100">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; Your Website 2024</div>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </body>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+		<script src="{{ asset('assets/js/scripts.js') }}"></script>
+		<script src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
+		<script src="{{ asset('node_modules/select2/dist/js/select2.min.js')}}"></script>
+		<link href="{{ asset('node_modules/@fortawesome/fontawesome-free/js/all.js') }}" rel="stylesheet"/> {% block javascripts %}{% endblock %}
+		</body>
+
+     
+
+	</html>
+

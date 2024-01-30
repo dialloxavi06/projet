@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Projets
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+	<h2>Liste des Projets</h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Nom</th>
+				<th scope="col">Description</th>
+				<th scope="col">Création</th>
+				{# <th scope="col">Statut</th> #}
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for projet in pagination %}
+				<tr>
+					<td>{{ projet.name }}</td>
+					<td>{{ projet.description }}</td>
+					<td>{{ projet.createdAt|date('d/m/y') }}</td>
+					{# <td>{{ projet.status }}</td> #}
+					<td>
+						{# <a href="{{ path('project.details', {id: projet.id}) }}" class="btn btn-info btn-sm"> #}
+						<i class="fas fa-info-circle"></i>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('app_projet_delete', {id: projet.id}) }}" class="btn btn-danger btn-sm">
+								<i class="fas fa-user-times"></i>
+							</a>
+							<a href="{{ path('projet.add', {id: projet.id}) }}" class="btn btn-success btn-sm">
+								<i class="fas fa-user-edit"></i>
+							</a>
+						{% endif %}
+					</td>
+				</tr>
+			</a>
+
+		</tbody>
+	</td>
+</tr>{% endfor %}</tbody></table>{% if is_granted('ROLE_ADMIN') %}<a href="{{ path('projet.add') }}" class="btn btn-success">Ajouter un Projet</a>{% endif %}</div><div class="pagination">{{ knp_pagination_render(pagination) }}</div>{% endblock %}

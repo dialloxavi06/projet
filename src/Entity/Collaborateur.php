@@ -99,4 +99,15 @@ class Collaborateur
 
         return $this;
     }
+
+    public function getNomPrenom(): string
+{
+    return $this->nom . ' ' . $this->prenom;
+}
+
+// Dans votre entité Projet
+
+
+
+
 }

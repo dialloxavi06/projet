@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des personnes{% endblock %}
+
+{% block body %}
+<div class="row">
+    {% for user in users %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ user.nom }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ user.prenom }} {{ user.nom }}</h6>
+            {# <a href="{{ path('personne.detail', {id: personne.id}) }}" class="card-link"> #}
+                <i class="fas fa-info-circle"></i>
+            </a>
+       
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

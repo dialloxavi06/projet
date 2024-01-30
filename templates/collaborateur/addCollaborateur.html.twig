@@ -1,0 +1,28 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="text-center">
+            <h1>Formulaire d'ajout d'un Collaborateur</h1>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'row g-3 mx-auto'}}) }}
+        <div class="col-md-6">
+            {{ form_row(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom du collaborateur'}}) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prénom du collaborateur'}}) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.adress_mail, {'attr': {'class': 'form-control', 'placeholder': 'Adresse e-mail'}}) }}
+        </div>
+        {# <div class="col-md-6">
+            {{ form_row(form.projets, {'attr': {'class': 'form-control', 'placeholder': 'Projets associés'}}) }}
+        </div> #}
+
+        {{ form_rest(form) }}
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
