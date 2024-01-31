@@ -4,9 +4,6 @@ Le projet est une application web développée avec le framework Symfony, visant
 
 ## Installation
 
-Assurez-vous d'avoir installé les prérequis suivants avant de poursuivre avec l'installation de ce projet.
-
-- [Liste des prérequis]
 
 ### Étapes d'installation
 
